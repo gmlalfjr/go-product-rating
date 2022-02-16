@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"server/collections"
 	"server/controller"
 	"server/db"
 	"server/entity"
@@ -16,8 +17,9 @@ func main(){
 	conf := helpers.NewConfiguration()
 	conn := db.Connection(conf)
 	err := conn.AutoMigrate(&entity.Product{})
-	newRepo := repository.NewProductRepository()
-	newService := services.NewProductService(newRepo, conn)
+	newCollection := collections.NewCollection(conn, conf)
+	newRepo := repository.NewProductRepository(newCollection)
+	newService := services.NewProductService(newRepo)
 	newController := controller.NewProductController(newService)
 
 	r.GET("/ping", newController.CreateProduct)

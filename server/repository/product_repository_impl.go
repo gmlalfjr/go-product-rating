@@ -1,21 +1,24 @@
 package repository
 
 import (
-	"gorm.io/gorm"
+	"server/collections"
 	"server/entity"
 	"server/exception"
 )
 
 type ProductRepositoryImpl struct {
-
+	collections.Collection
 }
 
-func NewProductRepository() ProductRepository {
-	return &ProductRepositoryImpl{}
+func NewProductRepository(db collections.Collection) ProductRepository {
+	return &ProductRepositoryImpl{
+		db,
+	}
 }
 
-func (p ProductRepositoryImpl) CreateProduct(article *entity.Product, db *gorm.DB) (*entity.Product, *exception.ErrorResponse) {
-	if err := db.Table("products").Create(&article).Error; err !=nil {
+func (p ProductRepositoryImpl) CreateProduct(article *entity.Product) (*entity.Product, *exception.ErrorResponse) {
+
+	if err := p.ProductDB().Create(&article).Error; err !=nil {
 		return nil, &exception.ErrorResponse{
 			Code:   500,
 			Status: "Internal Server Error",

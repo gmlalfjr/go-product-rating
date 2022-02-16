@@ -1,7 +1,6 @@
 package services
 
 import (
-	"gorm.io/gorm"
 	"server/entity"
 	"server/exception"
 	"server/repository"
@@ -11,13 +10,11 @@ import (
 
 type ProductServiceImpl struct {
 	productRepository repository.ProductRepository
-	DB *gorm.DB
 }
 
-func NewProductService(repo repository.ProductRepository, db *gorm.DB) ProductService {
+func NewProductService(repo repository.ProductRepository) ProductService {
 	return ProductServiceImpl{
 		productRepository: repo,
-		DB:                db,
 	}
 }
 
@@ -28,7 +25,7 @@ func (p ProductServiceImpl) CreateProduct(request *web.ProductCreateRequest) (*w
 		CreatedAt:   time.Now(),
 		ModifiedAt:  time.Now(),
 	}
-	data, err :=p.productRepository.CreateProduct(&product, p.DB)
+	data, err :=p.productRepository.CreateProduct(&product)
 	if err != nil {
 		return nil, err
 	}
