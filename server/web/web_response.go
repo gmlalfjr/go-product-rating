@@ -3,9 +3,9 @@ package web
 import "net/http"
 
 type Response struct {
-	Code int `json:"code"`
-	Status string `json:"status"`
-	Data interface{} `json:"data"`
+	Code   int         `json:"code"`
+	Status string      `json:"status"`
+	Data   interface{} `json:"data"`
 }
 
 func SuccessCreate(data interface{}) *Response {
@@ -15,4 +15,3 @@ func SuccessCreate(data interface{}) *Response {
 		Data:   data,
 	}
 }
-

@@ -1,23 +1,24 @@
-package controller
+package product_controller
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"server/exception"
-	"server/services"
+	"server/services/product_service"
 	"server/web"
+	"server/web/product_web"
 )
 
 type ProductControllerImpl struct {
-	productService services.ProductService
+	productService product_service.ProductService
 }
 
-func NewProductController(service services.ProductService) ProductController {
+func NewProductController(service product_service.ProductService) ProductController {
 	return ProductControllerImpl{productService: service}
 }
 
 func (p ProductControllerImpl) CreateProduct(ctx *gin.Context) {
-	product := &web.ProductCreateRequest{}
+	product := &product_web.ProductCreateRequest{}
 
 	if errBindJson := ctx.ShouldBindJSON(product); errBindJson != nil {
 		ctx.JSON(http.StatusBadGateway, exception.ErrorResponse{

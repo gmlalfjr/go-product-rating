@@ -12,12 +12,17 @@ type CollectionImpl struct {
 
 func NewCollection(db *gorm.DB, conf helpers.Configuration) Collection {
 	return &CollectionImpl{
-		DB:   db,
+		DB:     db,
 		config: conf,
 	}
 }
 
 func (c CollectionImpl) ProductDB() *gorm.DB {
-	 data := c.Table(c.config.Get("PRODUCT_TABLE"))
-	 return data
+	data := c.Table(c.config.Get("PRODUCT_TABLE"))
+	return data
+}
+
+func (c CollectionImpl) RatingDB() *gorm.DB {
+	data := c.Table(c.config.Get("RATING_TABLE"))
+	return data
 }
