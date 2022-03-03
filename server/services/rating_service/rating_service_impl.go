@@ -41,8 +41,8 @@ func (r RatingServiceImpl) GetAllProductRating(id int) ([]rating_web.RatingCreat
 		return nil, err
 	}
 
-	var ratings []rating_web.RatingCreateResponse
-
+	//var ratings []rating_web.RatingCreateResponse
+	ratings := make([]rating_web.RatingCreateResponse, 0)
 	for _, val := range data {
 		ratings = append(ratings, rating_web.RatingCreateResponse{
 			Star:      val.Star,

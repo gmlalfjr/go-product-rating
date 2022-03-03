@@ -83,11 +83,10 @@ func (r RatingControllerImpl) GetAllRatingByProduct(ctx *gin.Context) {
 		})
 		return
 	}
-
 	ctx.JSON(http.StatusCreated, web.Response{
 		Code:   http.StatusCreated,
 		Status: "Success Create Data",
-		Data:   data,
+		Data:  data,
 	})
 	return
 }

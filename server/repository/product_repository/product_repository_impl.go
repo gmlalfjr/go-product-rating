@@ -28,8 +28,9 @@ func (p ProductRepositoryImpl) CreateProduct(product *entity.Product) (*entity.P
 	return product, nil
 }
 
-func (p ProductRepositoryImpl) FindProductById(product *entity.Product) (*entity.Product, *exception.ErrorResponse) {
-	if err := p.ProductDB().First(&product).Error; err != nil {
+func (p ProductRepositoryImpl) FindProductById(id int) (*entity.Product, *exception.ErrorResponse) {
+	var product *entity.Product
+	if err := p.ProductDB().Where("id = ?", id).First(&product).Error; err != nil {
 		return nil, &exception.ErrorResponse{
 			Code:   500,
 			Status: "Internal Server Error",
@@ -38,3 +39,18 @@ func (p ProductRepositoryImpl) FindProductById(product *entity.Product) (*entity
 	}
 	return product, nil
 }
+
+func (p ProductRepositoryImpl) GetAllProduct() ([]entity.Product, *exception.ErrorResponse) {
+	var product []entity.Product
+	if err := p.ProductDB().Find(&product).Error; err !=nil {
+		return nil, &exception.ErrorResponse{
+			Code:   500,
+			Status: "Internal Server Error",
+			Data:   err.Error(),
+		}
+	}
+
+	return product, nil
+}
+
+

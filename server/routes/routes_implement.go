@@ -33,6 +33,8 @@ func (p Engine) ProductRoutes() {
 	newService := product_service.NewProductService(newRepo)
 	newController := product_controller.NewProductController(newService)
 	p.gin.POST("/create-product", newController.CreateProduct)
+	p.gin.GET("/get-product", newController.GetProduct)
+	p.gin.GET("/get-product/:id", newController.GetProductDetail)
 }
 
 func (p Engine) RatingRoutes() {
